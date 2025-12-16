@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SecurityService {
-  private apiUrl = 'http://0.0.0.0:3000/api/security'; // Reemplaza con la URL de tu microservicio Hapi
+  private apiUrl = 'http://127.0.0.1:3001/api/seguridad'; 
 
   constructor(private http: HttpClient) {}
 
@@ -14,7 +14,11 @@ export class SecurityService {
    * Obtiene un token de seguridad de 8 dígitos al cargar el formulario.
    * @returns 
    */
-  getToken(): Observable<{ token: string }> {
-    return this.http.get<{ token: string }>(`${this.apiUrl}/generate-token`); 
+  getToken(): Observable<{ 
+    token: string 
+  }> {
+    return this.http.get<{ 
+      token: string 
+    }>(`${this.apiUrl}/generar-token`); 
   }
 }

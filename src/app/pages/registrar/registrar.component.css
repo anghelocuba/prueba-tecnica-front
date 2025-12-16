@@ -14,7 +14,7 @@
 .container {
     display: flex;
     padding: 0 40px;
-    max-width: 1400px;
+   
     justify-content: flex-end;
     align-items: center;
       height: 100vh;
@@ -39,8 +39,9 @@ h2 ,
     flex-direction: column;
     gap: 15px;
     background-color: rgba(30, 30, 30, 0.85);
-  font-family: Arial, sans-serif;
-          padding: 24px 20px;
+    font-family: Arial, sans-serif;
+    padding: 24px 20px;
+    width:550px;
 }
 .form-group {
   display: flex;

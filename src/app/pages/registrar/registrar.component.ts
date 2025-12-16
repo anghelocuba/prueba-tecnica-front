@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { SecurityService } from '../../sdk/security.service'; 
+import { SecurityService } from '../../sdk/seguridad.service'; 
 import { ClienteService } from '../../sdk/cliente.service'; 
 import { Cliente } from '../../models/cliente.model'; 
-import { mayorDeEdadValidator } from '../../utils/age.validator'; 
+import { mayorDeEdadValidator } from '../../utils/edad.validar'; 
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-registrar',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  templateUrl: './registrar.component.html',
+  styleUrls: ['./registrar.component.css']
 })
 export class RegisterComponent implements OnInit { 
   form: FormGroup;
@@ -19,8 +19,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private securityService: SecurityService, // Inyectar
-    private clienteService: ClienteService // Inyectar
+    private securityService: SecurityService, 
+    private clienteService: ClienteService
   ) {
     this.form = this.fb.group({
       nombres: ['', Validators.required],
@@ -38,13 +38,16 @@ export class RegisterComponent implements OnInit {
 
   // Se ejecuta al inicializar el componente
   ngOnInit(): void {
-    this.getSecurityToken();
+    this.getToken();
   }
 
-  getSecurityToken(): void {
+  getToken(): void {
     this.isLoadingToken = true;
     this.securityService.getToken().subscribe({
       next: (response) => {
+        console.log("response")
+                console.log(response)
+
         this.form.get('token')?.setValue(response.token);
         this.isLoadingToken = false;
       },

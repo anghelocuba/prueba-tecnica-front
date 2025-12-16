@@ -50,8 +50,8 @@
             <label>Bono de Bienvenida</label>
             <select formControlName="bono">
                 <option value="">Seleccione</option>
-                <option value="10">Bono 10%</option>
-                <option value="20">Bono 20%</option>
+                <option value="1">Bono 10%</option>
+                <option value="2">Bono 20%</option>
             </select>
             <small *ngIf="form.get('bono')?.invalid && form.get('bono')?.touched">
                 Bono es obligatorio

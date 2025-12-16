@@ -7,7 +7,7 @@ export function mayorDeEdadValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const fechaNacimiento = control.value;
     if (!fechaNacimiento) {
-      return null; // Deja que Validators.required maneje si está vacío
+      return null; 
     }
 
     const fechaNac = new Date(fechaNacimiento);

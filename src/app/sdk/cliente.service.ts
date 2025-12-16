@@ -7,7 +7,7 @@ import { Cliente } from '../models/cliente.model';
   providedIn: 'root'
 })
 export class ClienteService {
-  private apiUrl = 'http://0.0.0.0:3000/api/clientes'; 
+  private apiUrl = 'http://127.0.0.1:3002/api/clientes'; 
 
   constructor(private http: HttpClient) {}
 
@@ -16,6 +16,9 @@ export class ClienteService {
    * @param cliente
    */
   registrarCliente(cliente: Cliente): Observable<any> {
+    console.log("cliente")
+    console.log(cliente)
+
     return this.http.post(`${this.apiUrl}/register`, cliente);
   }
 }
