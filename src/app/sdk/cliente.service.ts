@@ -19,6 +19,6 @@ export class ClienteService {
     console.log("cliente")
     console.log(cliente)
 
-    return this.http.post(`${this.apiUrl}/register`, cliente);
+    return this.http.post(`${this.apiUrl}/registrar`, cliente);
   }
 }

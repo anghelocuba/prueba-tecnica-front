@@ -5,7 +5,7 @@ import { SecurityService } from '../../sdk/seguridad.service';
 import { ClienteService } from '../../sdk/cliente.service'; 
 import { Cliente } from '../../models/cliente.model'; 
 import { mayorDeEdadValidator } from '../../utils/edad.validar'; 
-
+import { ToastrService } from 'ngx-toastr'; 
 @Component({
   selector: 'app-registrar',
   standalone: true,
@@ -20,7 +20,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private securityService: SecurityService, 
-    private clienteService: ClienteService
+    private clienteService: ClienteService,
+    private toastr: ToastrService
   ) {
     this.form = this.fb.group({
       nombres: ['', Validators.required],
@@ -70,12 +71,15 @@ export class RegisterComponent implements OnInit {
     this.clienteService.registrarCliente(clienteData).subscribe({
       next: (response) => {
         console.log('Registro exitoso:', response);
-        alert('Cliente registrado con éxito!');
+        //alert('Cliente registrado con éxito!');
+        this.toastr.success('Registro completado');
         this.form.reset(); 
       },
       error: (err) => {
         console.error('Error al registrar cliente:', err);
-        alert('Ocurrió un error durante el registro.');
+        //alert('Ocurrió un error durante el registro.');
+         this.toastr.error('Error al registrar cliente:');
+
       }
     });
   }
