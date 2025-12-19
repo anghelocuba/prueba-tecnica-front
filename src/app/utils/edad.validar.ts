@@ -1,8 +1,7 @@
 import { AbstractControl, ValidatorFn, ValidationErrors } from '@angular/forms';
 
-/**
- * Validador personalizado que verifica si el usuario es mayor de 18 años.
- */
+ // Validador personalizado que verifica si el usuario es mayor de 18 años.
+ 
 export function mayorDeEdadValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const fechaNacimiento = control.value;

@@ -1,0 +1,16 @@
+services:
+  angular-front:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: frontend-casino
+    ports:
+      - "80:80"
+    networks:
+      - casino-net
+    restart: always
+
+networks:
+  casino-net:
+    external: true
+    name: despliegue_casino-net
