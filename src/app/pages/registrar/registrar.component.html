@@ -1,94 +1,152 @@
 <div class="main-background">
-<div class="container">
+  <div class="container">
     
+    <div class="form">
+      
+      <h2>{{ paso === 1 ? 'Elige tu Bono' : 'Registro de Cliente' }}</h2>
+     @if(paso === 1){    
+      <div class="bonus-container">
+            <div class="bonus-card card-green" [class.selected]="form.get('bono')?.value === '1'" (click)="seleccionarBono('1')">
+                <div class="bonus-number">1</div>
+                <div class="bonus-content">
+                    <h3>100 Giros gratis</h3>
+                    <p>Para Casino</p>
+                </div>
+            </div>
+            <div class="bonus-card card-green" [class.selected]="form.get('bono')?.value === '2'" (click)="seleccionarBono('2')">
+                <div class="bonus-number">2</div>
+                <div class="bonus-content">
+                    <h3>Apuesta gratis S/30</h3>
+                    <p>Para Deportes</p>
+                </div>
+            </div>
+            <div class="bonus-card card-green" [class.selected]="form.get('bono')?.value === '3'" (click)="seleccionarBono('3')">
+                <div class="bonus-number">3</div>
+                <div class="bonus-content">
+                <h3>Sin bono</h3>
+                <p>Escríbenos si cambias de opinión</p>
+                </div>
+            </div>
 
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
-      <h2>Registro de Cliente</h2>  
-     <div class="form-row">      
-        <div class="form-group">
-            <label>Tipo de Documento</label>
-            <select formControlName="tipoDocumento">
-                <option value="">Seleccione</option>
-                <option value="DNI">DNI</option>
-                <option value="CE">Carnet de Extranjería</option>
-            </select>
-            <small *ngIf="form.get('tipoDocumento')?.invalid && form.get('tipoDocumento')?.touched">
-                Tipo de documento es obligatorio
-            </small>
+            <div class="form-actions">
+                <button type="button" class="btn-continuar" (click)="continuarRegistro()" [disabled]="!form.get('bono')?.value">
+                Continuar
+                </button>
+            </div>
         </div>
+    }
+      @if(paso === 2){
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="form-row">      
+                <div class="form-group">
+                    <label>Tipo de Documento</label>
+                    <select formControlName="tipoDocumento">
+                        <option value="">Seleccione</option>
+                        <option value="DNI">DNI</option>
+                        <option value="CE">Carnet de Extranjería</option>
+                    </select>
+                    @if(form.get('tipoDocumento')?.invalid && form.get('tipoDocumento')?.touched){
+                        <small>
+                            Tipo de documento es obligatorio
+                        </small>
+                    }
+                    
+                </div>
 
-        <div class="form-group">
-            <label>N° Documento</label>
-            <input type="text" formControlName="numeroDocumento" placeholder="Número de documento" />
-            <small *ngIf="form.get('numeroDocumento')?.invalid && form.get('numeroDocumento')?.touched">
-                N° Documento es obligatorio
-            </small>
-        </div>
-       </div>
+                <div class="form-group">
+                    <label>N° Documento</label>
+                    <input type="text" formControlName="numeroDocumento" placeholder="Número de documento" />
 
-        <div class="form-row">
+                    @if(form.get('numeroDocumento')?.invalid && form.get('numeroDocumento')?.touched){
+                        <small>
+                            N° Documento es obligatorio
+                        </small>
+                    }
+                </div>
+            </div>
 
-        <div class="form-group">
-            <label>Nombres</label>
-            <input type="text" formControlName="nombres" placeholder="Ingrese nombres" />
-            <small *ngIf="form.get('nombres')?.invalid && form.get('nombres')?.touched">
-                Nombres es obligatorio
-            </small>
-        </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Nombres</label>
+                    <input type="text" formControlName="nombres" placeholder="Ingrese nombres" />
+                    
+                    @if(form.get('nombres')?.invalid && form.get('nombres')?.touched){
+                        <small>
+                           Nombres es obligatorio
+                        </small>
+                    }
+                </div>
 
-        <div class="form-group">
-            <label>Apellidos</label>
-            <input type="text" formControlName="apellidos" placeholder="Ingrese apellidos" />
-            <small *ngIf="form.get('apellidos')?.invalid && form.get('apellidos')?.touched">
-                Apellidos es obligatorio
-            </small>
-        </div>
-</div>
-        
+                <div class="form-group">
+                    <label>Apellidos</label>
+                    <input type="text" formControlName="apellidos" placeholder="Ingrese apellidos" />
+                   
+                    @if(form.get('apellidos')?.invalid && form.get('apellidos')?.touched){
+                        <small>
+                           Apellidos es obligatorio
+                        </small>
+                    }
+                </div>
+            </div>
+            
+<!--
+            <div class="form-group">
+                <label>Bono de Bienvenida</label>
+                <select formControlName="bono">
+                    <option value="">Seleccione</option>
+                    <option value="1">Bono 10%</option>
+                    <option value="2">Bono 20%</option>
+                </select>
+            </div>
+-->
+            <div class="form-group">
+                <label>Fecha de Nacimiento</label>
+                <input type="date" formControlName="fechaNacimiento" />
+                @if(form.get('fechaNacimiento')?.errors?.['menorEdad'] && form.get('fechaNacimiento')?.touched){
+                    <small>
+                        Debe ser mayor de 18 años
+                    </small>
+                }
+                @if(form.get('fechaNacimiento')?.errors?.['required'] && form.get('fechaNacimiento')?.touched){
+                    <small>
+                        La fecha de nacimiento es obligatoria
+                    </small>
+                }
+            </div>
 
-        <div class="form-group">
-            <label>Bono de Bienvenida</label>
-            <select formControlName="bono">
-                <option value="">Seleccione</option>
-                <option value="1">Bono 10%</option>
-                <option value="2">Bono 20%</option>
-            </select>
-            <small *ngIf="form.get('bono')?.invalid && form.get('bono')?.touched">
-                Bono es obligatorio
-            </small>
-        </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" formControlName="email" placeholder="correo@ejemplo.com" />
 
-        <div class="form-group">
-            <label>Fecha de Nacimiento</label>
-            <input type="date" formControlName="fechaNacimiento" />
-            <small *ngIf="form.get('fechaNacimiento')?.errors?.['menorEdad'] && form.get('fechaNacimiento')?.touched">
-                Debe ser mayor de 18 años
-            </small>
-             <small *ngIf="form.get('fechaNacimiento')?.errors?.['required'] && form.get('fechaNacimiento')?.touched">
-                La fecha de nacimiento es obligatoria
-            </small>
-        </div>
+                @if(form.get('email')?.errors?.['required'] && form.get('email')?.touched){
+                    <small>
+                        El formato de email es inválido
+                    </small>
+                }
+            </div>
+            
+            <div class="form-group">
+                <label>Token de Seguridad</label>
+                <input type="text" formControlName="token" [attr.placeholder]="isLoadingToken ? 'Obteniendo token...' : 'Ingrese token o edite'" />
+                @if(isLoadingToken){
+                    <small>
+                        Cargando token...
+                    </small>
+                }
+            </div>
 
-        <div class="form-group">
-            <label>Email</label>
-            <input type="email" formControlName="email" placeholder="correo@ejemplo.com" />
-            <small *ngIf="form.get('email')?.errors?.['email'] && form.get('email')?.touched">
-                El formato de email es inválido
-            </small>
-        </div>
-        
-        <div class="form-group">
-            <label>Token de Seguridad</label>
-            <input type="text" formControlName="token" [attr.placeholder]="isLoadingToken ? 'Obteniendo token...' : 'Ingrese token o edite'" />
-            <small *ngIf="isLoadingToken">Cargando token...</small>
-        </div>
+            <div class="form-actions">
+                <button type="button" class="btn-atras" (click)="volver()" >←</button>
+                
+                <button type="submit" class="btn-registrar" [disabled]="form.invalid || isLoadingToken">
+                    REGISTRAR
+                </button>
+            </div>
 
-        <div class="form-actions">
-            <button type="submit" [disabled]="form.invalid || isLoadingToken">
-                Registrar
-            </button>
-        </div>
+        </form>
+      }
+     
 
-    </form>
-</div>
+    </div>
+  </div>
 </div>

@@ -16,7 +16,7 @@ import { ToastrService } from 'ngx-toastr';
 export class RegisterComponent implements OnInit { 
   form: FormGroup;
   isLoadingToken = true;
-
+  paso: number = 1; 
   constructor(
     private fb: FormBuilder,
     private securityService: SecurityService, 
@@ -83,5 +83,20 @@ export class RegisterComponent implements OnInit {
       }
     });
   }
-  
+
+  continuarRegistro(): void {
+    if (this.form.get('bono')?.valid) {
+      this.paso = 2;
+    } else {
+      this.form.get('bono')?.markAsTouched();
+      this.toastr.warning('Por favor, seleccione un bono para continuar');
+    }
+  }
+
+  volver(): void {
+    this.paso = 1;
+  }
+  seleccionarBono(valor: string) {
+  this.form.get('bono')?.setValue(valor);
+  }
 }
